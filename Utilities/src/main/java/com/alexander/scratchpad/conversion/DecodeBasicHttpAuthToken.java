@@ -4,12 +4,12 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 
 public class DecodeBasicHttpAuthToken {
-
-	public static String getUsername(String base64){
-		return StringUtils.newStringUtf8(Base64.decodeBase64(base64));
-	}
 	
 	public static void main(String[] args){
+		String authString = "user";
+		System.out.println(StringUtils.newStringUtf8(Base64.encodeBase64(authString.getBytes())));
+		
+		
 		BasicHttpAuthToken token = new BasicHttpAuthToken("YWJlbGxpb2dhOls0YFtZNTd2");
 		
 		System.out.println(token.getUsername());

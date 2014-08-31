@@ -8,9 +8,25 @@ import org.junit.Test;
 
 public class BasicHttpAuthTokenTest {
 
-	private String sampleBase64 	= "YWJlbGxpb2dhOls0YFtZNTd2";
-	private String sampleUsername 	= "abellioga";
-	private String samplePassword	= "[4`[Y57v";
+	private String sampleBase64Token 	= "YWJlbGxpb2dhOls0YFtZNTd2";
+	private String sampleUsername 		= "abellioga";
+	private String samplePassword		= "[4`[Y57v";
+	private String sampleBase64Username = "YWJlbGxpb2";
+	private String sampleBase64Password	= "Ols0YFtZNTd2";
+	
+	private String semiColonBase64				= "dhO";
+	private String usernameWhitespacePassword	= sampleBase64Username+semiColonBase64+"iAgICA=";
+	private String whitespaceUsernamePassword	= "ICAgIDpbNGBbWTU3d";
+	private String emptyBase64Token		= "Og==";
+	
+	private String emptyToken			= "";
+	private String whitespaceToken		= "    ";
+	private String nonBase64Token		= ";'@;./[]#~'=_+&$(£^&*";
+	private String tokenWithMultipleSemiColons 		= "dXNlcjpwYXNzd29yZDpzZWNvbmQ6dGhpcmQ=";
+	private String multipleTokenUsername			= "user";
+	private String multipleTokenPassword			= "password";
+	private String tokenWithoutSemiColon			= "dXNlcg==";
+	private String tokenWithoutSemiColonUsername	= "user";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -22,27 +38,144 @@ public class BasicHttpAuthTokenTest {
 
 	@Test public void 
 	testConstructor_givenNullToken() {
-		fail("Not yet implemented");
+		BasicHttpAuthToken token = new BasicHttpAuthToken(null);
+		assertEquals(emptyToken, 	token.getUsername());
+		assertEquals(emptyToken, 	token.getPassword());
 	}
 	
 	@Test public void 
 	testConstructor_givenEmptyToken() {
-		fail("Not yet implemented");
+		BasicHttpAuthToken token = new BasicHttpAuthToken(emptyToken);
+		assertEquals(emptyToken, 	token.getUsername());
+		assertEquals(emptyToken,	token.getPassword());
 	}
 
 	@Test public void 
 	testConstructor_givenWhitespaceToken() {
-		fail("Not yet implemented");
+		BasicHttpAuthToken token = new BasicHttpAuthToken(whitespaceToken);
+		assertEquals(emptyToken, 	token.getUsername());
+		assertEquals(emptyToken, 	token.getPassword());
 	}
 
 	@Test public void 
 	testConstructor_givenNonBase64Token() {
-		fail("Not yet implemented");
+		BasicHttpAuthToken token = new BasicHttpAuthToken(nonBase64Token);
+		assertEquals(emptyToken, 	token.getUsername());
+		assertEquals(emptyToken, 	token.getPassword());
+	}
+
+	@Test public void 
+	testConstructor_givenTokenWithMultipleSemiColons() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(tokenWithMultipleSemiColons);
+		assertEquals(multipleTokenUsername, token.getUsername());
+		assertEquals(multipleTokenPassword, token.getPassword());
+
+	}
+
+	@Test public void 
+	testConstructor_givenTokenWithoutSemiColons() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(tokenWithoutSemiColon);
+		assertEquals(tokenWithoutSemiColonUsername, 	token.getUsername());
+		assertEquals(emptyToken, 	token.getPassword());
 	}
 
 	@Test public void 
 	testConstructor_givenToken() {
-		fail("Not yet implemented");
+		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleBase64Token);
+		assertEquals(sampleUsername, token.getUsername());
+		assertEquals(samplePassword, token.getPassword());
 	}
 	
+	//Test GetBasicHttpAuthToken with token constructor setup
+	@Test public void 
+	testGetBasicHttpAuthToken_givenNullToken() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(null);
+		assertEquals(emptyBase64Token, 	token.getBasicHttpAuthToken());
+	}
+	
+	@Test public void 
+	testGetBasicHttpAuthToken_givenEmptyToken() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(emptyToken);
+		assertEquals(emptyBase64Token, 	token.getBasicHttpAuthToken());
+	}
+
+	@Test public void 
+	testGetBasicHttpAuthToken_givenWhitespaceToken() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(whitespaceToken);
+		assertEquals(emptyBase64Token, 	token.getBasicHttpAuthToken());
+	}
+
+	@Test public void 
+	testGetBasicHttpAuthToken_givenNonBase64Token() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(nonBase64Token);
+		assertEquals(emptyBase64Token, 	token.getBasicHttpAuthToken());
+	}
+
+	@Test public void 
+	testGetBasicHttpAuthToken_givenTokenWithMultipleSemiColons() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(tokenWithMultipleSemiColons);
+		assertEquals("dXNlcjpwYXNzd29yZA==", 	token.getBasicHttpAuthToken());
+	}
+
+	@Test public void 
+	testGetBasicHttpAuthToken_givenTokenWithoutSemiColons() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(tokenWithoutSemiColon);
+		assertEquals("dXNlcjo=", 	token.getBasicHttpAuthToken());
+	}
+
+	@Test public void
+	testGetBasicHttpAuthToken_givenTokenConstructor(){
+		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleBase64Token);
+		assertEquals(sampleBase64Token, token.getBasicHttpAuthToken());
+	}
+	
+	@Test public void
+	testGetBasicHttpAuthToken_givenUserPasswordConstructor(){
+		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleUsername, samplePassword);
+		assertEquals(sampleBase64Token, token.getBasicHttpAuthToken());
+	}
+	
+	//Test GetBasicHttpAuthToken with username and password constructor
+	@Test public void 
+	testGetBasicHttpAuthToken_givenNullUsername() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(null, samplePassword);
+		assertEquals(sampleBase64Password, 	token.getBasicHttpAuthToken());
+	}
+	
+	@Test public void 
+	testGetBasicHttpAuthToken_givenNullPassword() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleUsername, null);
+		assertEquals(sampleBase64Username+semiColonBase64+"g==", 	token.getBasicHttpAuthToken());
+	}
+	
+	@Test public void 
+	testGetBasicHttpAuthToken_givenNullUsernameAndPassword() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(null, null);
+		assertEquals(emptyBase64Token, 	token.getBasicHttpAuthToken());
+		
+	}
+	
+	@Test public void 
+	testGetBasicHttpAuthToken_givenEmptyPassword() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleUsername, emptyToken);
+		assertEquals(sampleBase64Username+semiColonBase64+"g==", 	token.getBasicHttpAuthToken());
+	}
+	
+	@Test public void 
+	testGetBasicHttpAuthToken_givenEmptyUsername() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(emptyToken, samplePassword);
+		assertEquals(sampleBase64Password, 	token.getBasicHttpAuthToken());
+	}
+
+	@Test public void 
+	testGetBasicHttpAuthToken_givenWhitespacePassword() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleUsername, whitespaceToken);
+		assertEquals(usernameWhitespacePassword, 	token.getBasicHttpAuthToken());
+	}
+	
+	@Test public void 
+	testGetBasicHttpAuthToken_givenWhitespaceUsername() {
+		BasicHttpAuthToken token = new BasicHttpAuthToken(whitespaceToken, samplePassword);
+		assertEquals(whitespaceUsernamePassword+"g==", 	token.getBasicHttpAuthToken());
+	}
 }
