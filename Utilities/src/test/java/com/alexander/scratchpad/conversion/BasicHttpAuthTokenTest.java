@@ -8,25 +8,21 @@ import org.junit.Test;
 
 public class BasicHttpAuthTokenTest {
 
-	private String sampleBase64Token 	= "YWJlbGxpb2dhOls0YFtZNTd2";
-	private String sampleUsername 		= "abellioga";
-	private String samplePassword		= "[4`[Y57v";
-	private String sampleBase64Username = "YWJlbGxpb2";
-	private String sampleBase64Password	= "Ols0YFtZNTd2";
+	private String sampleBase64Token 	= "dXNlcjpwYXNzd29yZA==";
+	private String sampleUsername 		= "user";
+	private String samplePassword		= "password";
+	private String sampleBase64Username = "dXNlcjo=";
+	private String sampleBase64Password	= "OnBhc3N3b3Jk";
 	
-	private String semiColonBase64				= "dhO";
-	private String usernameWhitespacePassword	= sampleBase64Username+semiColonBase64+"iAgICA=";
-	private String whitespaceUsernamePassword	= "ICAgIDpbNGBbWTU3d";
-	private String emptyBase64Token		= "Og==";
-	
-	private String emptyToken			= "";
-	private String whitespaceToken		= "    ";
-	private String nonBase64Token		= ";'@;./[]#~'=_+&$(£^&*";
+	private String usernameWhitespacePassword	= "dXNlcjogICAg";
+	private String whitespaceUsernamePassword	= "ICAgIDpwYXNzd29yZA==";
+	private String emptyToken					= "";
+	private String emptyBase64Token				= "Og==";
+
+	private String whitespaceToken					= "    ";
+	private String nonBase64Token					= ";'@;./[]#~'=_+&$(£^&*";
 	private String tokenWithMultipleSemiColons 		= "dXNlcjpwYXNzd29yZDpzZWNvbmQ6dGhpcmQ=";
-	private String multipleTokenUsername			= "user";
-	private String multipleTokenPassword			= "password";
 	private String tokenWithoutSemiColon			= "dXNlcg==";
-	private String tokenWithoutSemiColonUsername	= "user";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -67,16 +63,16 @@ public class BasicHttpAuthTokenTest {
 	@Test public void 
 	testConstructor_givenTokenWithMultipleSemiColons() {
 		BasicHttpAuthToken token = new BasicHttpAuthToken(tokenWithMultipleSemiColons);
-		assertEquals(multipleTokenUsername, token.getUsername());
-		assertEquals(multipleTokenPassword, token.getPassword());
+		assertEquals(sampleUsername, token.getUsername());
+		assertEquals(samplePassword, token.getPassword());
 
 	}
 
 	@Test public void 
 	testConstructor_givenTokenWithoutSemiColons() {
 		BasicHttpAuthToken token = new BasicHttpAuthToken(tokenWithoutSemiColon);
-		assertEquals(tokenWithoutSemiColonUsername, 	token.getUsername());
-		assertEquals(emptyToken, 	token.getPassword());
+		assertEquals(sampleUsername, 	token.getUsername());
+		assertEquals(emptyToken, 		token.getPassword());
 	}
 
 	@Test public void 
@@ -129,13 +125,13 @@ public class BasicHttpAuthTokenTest {
 		assertEquals(sampleBase64Token, token.getBasicHttpAuthToken());
 	}
 	
+	//Test GetBasicHttpAuthToken with username and password constructor
 	@Test public void
 	testGetBasicHttpAuthToken_givenUserPasswordConstructor(){
 		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleUsername, samplePassword);
 		assertEquals(sampleBase64Token, token.getBasicHttpAuthToken());
 	}
 	
-	//Test GetBasicHttpAuthToken with username and password constructor
 	@Test public void 
 	testGetBasicHttpAuthToken_givenNullUsername() {
 		BasicHttpAuthToken token = new BasicHttpAuthToken(null, samplePassword);
@@ -145,7 +141,7 @@ public class BasicHttpAuthTokenTest {
 	@Test public void 
 	testGetBasicHttpAuthToken_givenNullPassword() {
 		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleUsername, null);
-		assertEquals(sampleBase64Username+semiColonBase64+"g==", 	token.getBasicHttpAuthToken());
+		assertEquals(sampleBase64Username, 	token.getBasicHttpAuthToken());
 	}
 	
 	@Test public void 
@@ -158,7 +154,7 @@ public class BasicHttpAuthTokenTest {
 	@Test public void 
 	testGetBasicHttpAuthToken_givenEmptyPassword() {
 		BasicHttpAuthToken token = new BasicHttpAuthToken(sampleUsername, emptyToken);
-		assertEquals(sampleBase64Username+semiColonBase64+"g==", 	token.getBasicHttpAuthToken());
+		assertEquals(sampleBase64Username, 	token.getBasicHttpAuthToken());
 	}
 	
 	@Test public void 
@@ -176,6 +172,6 @@ public class BasicHttpAuthTokenTest {
 	@Test public void 
 	testGetBasicHttpAuthToken_givenWhitespaceUsername() {
 		BasicHttpAuthToken token = new BasicHttpAuthToken(whitespaceToken, samplePassword);
-		assertEquals(whitespaceUsernamePassword+"g==", 	token.getBasicHttpAuthToken());
+		assertEquals(whitespaceUsernamePassword, 	token.getBasicHttpAuthToken());
 	}
 }
