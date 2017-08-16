@@ -3,14 +3,18 @@ package com.alexander.scratchpad.crypto.bcrypt;
 import com.alexander.scratchpad.conversion.BCryptHash;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Alexander on 13/08/2017.
  */
 public class BCryptBenchmark {
 
+    private static int targetUserGroupSize = 100;
+    
     public static void main(String[] args){
         
     }
@@ -53,4 +57,31 @@ public class BCryptBenchmark {
     public String printBenchmark(BenchmarkResultsFormatter formatter, List<BenchmarkResult> results){
         return formatter.format(results);
     }
+    
+    public List<DictionaryResult> getDictionaryBenchmark(List<BenchmarkResult> benchmarkResults, List<Integer> dictionarySizes){
+        List<DictionaryResult> dictionaryResults = new LinkedList<>();
+        for (BenchmarkResult benchmarkResult : benchmarkResults){
+            Map<Integer, Long> dictionaryResultMap = new HashMap<>();
+            for (Integer dictionarySize : dictionarySizes){
+                dictionaryResultMap.put(dictionarySize, getDictionaryBenchmark(benchmarkResult, dictionarySize));
+            }
+            dictionaryResults.add(new DictionaryResult(benchmarkResult.getCostFactor(), dictionaryResultMap));
+        }
+        return dictionaryResults;
+    }
+    
+    public Long getDictionaryBenchmark(BenchmarkResult benchmarkResult, Integer dictionarySize){
+        if (dictionarySize <= 0){
+            return 0L;
+        }
+        if (benchmarkResult == null){
+            return 0L;
+        }
+        return (benchmarkResult.getFinish() - benchmarkResult.getStart()) * dictionarySize * this.targetUserGroupSize;
+    }
+
+    public String printDictionaryResults(DictionaryResultsFormatter formatter, List<DictionaryResult> results){
+        return formatter.format(results);
+    }
+
 }
