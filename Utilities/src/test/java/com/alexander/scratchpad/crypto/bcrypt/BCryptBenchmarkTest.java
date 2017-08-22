@@ -252,10 +252,9 @@ public class BCryptBenchmarkTest {
         assertEquals(new Long(10000000), dictionaryResult.get(0).getResults().get(1000));
         assertEquals(new Long(100000000), dictionaryResult.get(0).getResults().get(10000));
     }
-
-
+    
     @Test
-    public void testPrintDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
+    public void testPrintDictionaryBenchmarkToConsole_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -268,30 +267,26 @@ public class BCryptBenchmarkTest {
         assertEquals(new Long(10000000), dictionaryResult.get(0).getResults().get(1000));
         assertEquals(new Long(100000000), dictionaryResult.get(0).getResults().get(10000));
         
-        bench.printDictionaryResults(new DictionaryResultsFormatter() {
-            @Override
-            public String format(List<DictionaryResult> results) {
-                StringBuilder output = new StringBuilder();
-                
-                String headerString = "<table>\n\t<tr><th>Cost</th><th>100</th><th>1000</th><th>10000</th></tr>\n";
-                System.out.print(headerString);
-                output.append(headerString);
-
-                results.forEach(result -> {
-                    String resultString = "\t<tr><td>" + result.getCostFactor() + "</td><td>";
-                    for (Integer key : result.getResults().keySet()){
-                        resultString += "<td>" + result.getResults().get(key) + "ms</td>";
-                    }
-                    resultString += "\n";
-                    System.out.print(resultString);
-                    output.append(resultString);
-                });
-
-                String close = "</table>\n";
-                System.out.print(close);
-                output.append(close);
-                return output.toString();
-            }
-        }, dictionaryResult);
+        String output = bench.printDictionaryResults(new StandardOutDictionaryResultsFormatter(), dictionaryResult);
+        System.out.println(output);
     }
+
+    @Test
+    public void testPrintDictionaryBenchmakToHTML_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
+        BCryptBenchmark bench = new BCryptBenchmark(5, 6);
+        List<BenchmarkResult> results = new LinkedList<>();
+        results.add(new BenchmarkResult(0, 100, 10));
+
+        List<DictionaryResult> dictionaryResult = bench.getDictionaryBenchmark(results, Arrays.asList(100,1000,10000));
+        assertEquals(1, dictionaryResult.size());
+        assertEquals(3, dictionaryResult.get(0).getResults().size());
+
+        assertEquals(new Long(1000000), dictionaryResult.get(0).getResults().get(100));
+        assertEquals(new Long(10000000), dictionaryResult.get(0).getResults().get(1000));
+        assertEquals(new Long(100000000), dictionaryResult.get(0).getResults().get(10000));
+
+        String output = bench.printDictionaryResults(new HtmlDictionaryResultsFormatter(), dictionaryResult);
+        System.out.println(output);
+    }
+
 }
