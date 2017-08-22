@@ -2,12 +2,13 @@ package com.alexander.scratchpad.crypto.bcrypt;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Alexander on 21/08/2017.
  */
 public class StandardOutDictionaryResultsFormatter implements DictionaryResultsFormatter {
-    public static int columnWidth = 15;
+    public static int columnWidth = 30;
     public static final String NEWLINE  = "\n";
     public static final String TAB      = "\t";
     
@@ -36,7 +37,7 @@ public class StandardOutDictionaryResultsFormatter implements DictionaryResultsF
 
             Collections.sort(result.getIndex());
             for (Integer key : result.getIndex()){
-                output.append(pad(result.getResults().get(key)+"")+COLUMN_CLOSE);
+                output.append(pad(getFormatted(result.getResults().get(key))+"")+COLUMN_CLOSE);
             }
             output.append(NEWLINE);
         });
@@ -67,5 +68,25 @@ public class StandardOutDictionaryResultsFormatter implements DictionaryResultsF
             padding.append(padChars);
         }
         return padding.toString();
+    }
+    
+
+    
+    public String getFormatted(long millis){
+        //Conversion from millis to total of each measurement of time
+        long secs = TimeUnit.MILLISECONDS.toSeconds(millis);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        
+        long remainingMinutes = minutes - TimeUnit.HOURS.toMinutes(hours);
+        long remainingSeconds = secs - TimeUnit.MINUTES.toSeconds(remainingMinutes) - TimeUnit.HOURS.toSeconds(hours);
+        long remainingMillis = millis - TimeUnit.SECONDS.toMillis(remainingSeconds) - TimeUnit.MINUTES.toMillis(remainingMinutes) - TimeUnit.HOURS.toMillis(hours);
+                
+        return String.format("%d hr, %d min, %d sec, %d ms",
+                hours,
+                remainingMinutes,
+                remainingSeconds,
+                remainingMillis
+        );
     }
 }
