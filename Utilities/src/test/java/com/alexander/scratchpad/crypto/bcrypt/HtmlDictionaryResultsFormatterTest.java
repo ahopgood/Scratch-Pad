@@ -1,5 +1,8 @@
 package com.alexander.scratchpad.crypto.bcrypt;
 
+import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlDictionaryResultsFormatter;
 import org.junit.Test;
 
 import java.util.Arrays;

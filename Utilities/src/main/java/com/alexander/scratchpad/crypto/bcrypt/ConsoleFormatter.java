@@ -1,5 +1,8 @@
 package com.alexander.scratchpad.crypto.bcrypt;
 
+import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.BenchmarkResultsFormatter;
+
 import java.util.List;
 
 /**

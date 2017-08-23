@@ -1,5 +1,6 @@
 package com.alexander.scratchpad.crypto.bcrypt;
 
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.StandardOutDictionaryResultsFormatter;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

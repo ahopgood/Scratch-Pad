@@ -1,6 +1,10 @@
 package com.alexander.scratchpad.crypto.bcrypt;
 
 import com.alexander.scratchpad.conversion.BCryptHash;
+import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.BenchmarkResultsFormatter;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.DictionaryResultsFormatter;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.HashMap;
@@ -58,7 +62,13 @@ public class BCryptBenchmark {
         return formatter.format(results);
     }
     
-    public List<DictionaryResult> getDictionaryBenchmark(List<BenchmarkResult> benchmarkResults, List<Integer> dictionarySizes){
+    public List<DictionaryResult> getDictionaryBenchmark(List<BenchmarkResult> benchmarkResults, List<Integer> dictionarySizes) throws BCryptHashException {
+        if (benchmarkResults == null){
+            throw new BCryptHashException("BenchmarkResult list is null, cannot generate dictionary benchmark results.");
+        }
+        if (dictionarySizes == null){
+            throw new BCryptHashException("Dictionary size list is null, cannot generate dictionary benchmark results.");            
+        }
         List<DictionaryResult> dictionaryResults = new LinkedList<>();
         for (BenchmarkResult benchmarkResult : benchmarkResults){
             Map<Integer, Long> dictionaryResultMap = new HashMap<>();
