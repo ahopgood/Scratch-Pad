@@ -1,4 +1,6 @@
-package com.alexander.scratchpad.crypto.bcrypt;
+package com.alexander.scratchpad.crypto.bcrypt.results.formatters;
+
+import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
 
 import java.util.Collections;
 import java.util.List;
