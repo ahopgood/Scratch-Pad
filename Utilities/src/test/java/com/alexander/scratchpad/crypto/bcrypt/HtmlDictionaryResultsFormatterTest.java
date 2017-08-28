@@ -31,5 +31,6 @@ public class HtmlDictionaryResultsFormatterTest {
         assertEquals(new Long(100000000), dictionaryResult.get(0).getResults().get(10000));
 
         String output = bench.printDictionaryResults(new HtmlDictionaryResultsFormatter(), dictionaryResult);
+        System.out.println(output);
     }
 }

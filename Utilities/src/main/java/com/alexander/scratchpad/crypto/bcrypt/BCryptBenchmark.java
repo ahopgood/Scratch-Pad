@@ -20,7 +20,10 @@ public class BCryptBenchmark {
     private static int targetUserGroupSize = 100;
     
     public static void main(String[] args){
-        
+        if (args.length < 2){
+            System.err.println("Parameters are:");
+            System.err.println("Start Cost Factor");
+        }
     }
     
     private final String testPassword = "security[]./?IS/1mp0rtant";

@@ -33,7 +33,7 @@ public class HtmlDictionaryResultsFormatter implements DictionaryResultsFormatte
 
             Collections.sort(result.getIndex());
             for (Integer key : result.getIndex()){
-                output.append(COLUMN_OPEN+result.getResults().get(key)+ COLUMN_CLOSE);
+                output.append(COLUMN_OPEN+ Formatting.getFormattedTime(result.getResults().get(key))+ COLUMN_CLOSE);
             }
             output.append(ROW_CLOSE+ NEWLINE);
         });
