@@ -3,14 +3,10 @@ package com.alexander.scratchpad.crypto.bcrypt;
 import com.alexander.scratchpad.conversion.BCryptHash;
 import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
 import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
-import com.alexander.scratchpad.crypto.bcrypt.results.formatters.BenchmarkResultsFormatter;
-import com.alexander.scratchpad.crypto.bcrypt.results.formatters.DictionaryResultsFormatter;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.*;
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Alexander on 13/08/2017.
@@ -20,10 +16,103 @@ public class BCryptBenchmark {
     private static int targetUserGroupSize = 100;
     
     public static void main(String[] args){
-        if (args.length < 2){
-            System.err.println("Parameters are:");
-            System.err.println("Start Cost Factor");
+
+        String validation = validate(args);
+        if (validation.isEmpty()){
+            String details = validationDetail(args);
+            if (details.isEmpty()){
+                try {
+                    int startCost = Integer.valueOf(args[0]);
+                    int finishCost = Integer.valueOf(args[1]);
+                    BCryptBenchmark bench = new BCryptBenchmark(startCost, finishCost);
+
+                    List<BenchmarkResult> results = bench.runBenchmark();
+                    REPORT benchReport = REPORT.valueOf(args[2]);
+                    switch (benchReport) {
+                        case STDOUT:
+                            bench.printBenchmark(new StandardOutBenchmarkResultsFormatter(), results);
+                            break;
+                        case HTML:
+                            bench.printBenchmark(new HtmlBenchmarkResultsFormatter(), results);
+                            break;
+                    }
+                    List<DictionaryResult> dictResults = bench.getDictionaryBenchmark(results, Arrays.asList(100,1_000, 10_000));
+                    if (args.length == 4){
+                        REPORT dictionaryReport = REPORT.valueOf(args[3]);
+                        switch (dictionaryReport){
+                            case STDOUT:
+                                bench.printDictionaryResults(new StandardOutDictionaryResultsFormatter(), dictResults);
+                                break;
+                            case HTML:
+                                bench.printDictionaryResults(new HtmlDictionaryResultsFormatter(), dictResults);
+                                break;
+                        }
+                    }
+                    
+                } catch (BCryptHashException e) {
+                    System.err.println(e.getMessage());
+                }
+            } else {
+                System.err.print(validation);
+            }
+        } else {
+            System.err.print(validation);
         }
+    }
+    
+    enum REPORT {
+        HTML, STDOUT;
+    }
+    
+    protected static String buildHelp(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("There are incorrect parameters.\n");
+        builder.append("BCryptBenchmark.jar ");
+        builder.append(" <start_cost_factor>");
+        builder.append(" <end_cost_factor>");
+        builder.append(" <benchmark_report_format>");
+        builder.append(" <dictionary_report_format> (optional)\n");
+
+        builder.append("<start_cost_factor> Integer representing the starting cost factor to benchmark from\n");
+        builder.append("<end_cost_factor> Integer representing the ending cost factor to benchmark against\n");
+        builder.append("<benchmark_report_format> String representing the report format; html, stdout. Defaults to standard out\n");
+        builder.append("<dictionary_report_format> Optional string, if present then a dictionary benchmark report is generated; html, stdout. Defaults to standard out\n");
+        return builder.toString();
+    }
+    
+    public static String validate(String[] args){
+        if (args == null || args.length < 3 || args.length > 4){
+            return buildHelp();
+        }
+        return "";
+    }
+
+    public static String validationDetail(String[] args){
+        int first = 0;
+        int second = 1;
+        int third = 2;
+        int fourth = 3;
+        try {
+            Integer.valueOf(args[first]);
+        } catch (NumberFormatException nfe) {
+            return "Parameter "+first+" ["+args[first]+"] is not a integer";
+        }
+        try {
+            Integer.valueOf(args[second]);
+        } catch (NumberFormatException nfe){
+            return "Parameter "+second+" ["+args[second]+" is not an integer";
+        }
+        try {
+            REPORT.valueOf(args[third]);
+        } catch (IllegalArgumentException iae){
+            return "Parameter "+third+" ["+args[third]+" does not match "+REPORT.HTML.name()+" or "+REPORT.STDOUT.name();
+        }
+        try {
+            REPORT.valueOf(args[fourth]);
+        } catch (IllegalArgumentException iae){
+            return "Parameter "+fourth+" ["+args[fourth]+" does not match "+REPORT.HTML.name()+" or "+REPORT.STDOUT.name();
+        }
+        return "";
     }
     
     private final String testPassword = "security[]./?IS/1mp0rtant";

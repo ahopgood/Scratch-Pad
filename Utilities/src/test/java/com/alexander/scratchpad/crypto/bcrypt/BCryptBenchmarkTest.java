@@ -244,7 +244,6 @@ public class BCryptBenchmarkTest {
         String output = bench.printDictionaryResults(new StandardOutDictionaryResultsFormatter(), dictionaryResult);
         System.out.println(output);
     }
-
     @Test
     public void testPrintDictionaryBenchmakToHTML_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
@@ -263,4 +262,10 @@ public class BCryptBenchmarkTest {
         System.out.println(output);
     }
 
+    @Test
+    public void testValidate_givenNullArgs(){
+
+      String[] args = null;
+        assertEquals(BCryptBenchmark.buildHelp(), BCryptBenchmark.validate(args));
+    }
 }
