@@ -1,5 +1,8 @@
 package com.alexander.scratchpad.crypto.bcrypt;
 
+import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlDictionaryResultsFormatter;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -28,5 +31,6 @@ public class HtmlDictionaryResultsFormatterTest {
         assertEquals(new Long(100000000), dictionaryResult.get(0).getResults().get(10000));
 
         String output = bench.printDictionaryResults(new HtmlDictionaryResultsFormatter(), dictionaryResult);
+        System.out.println(output);
     }
 }

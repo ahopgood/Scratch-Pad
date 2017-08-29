@@ -1,4 +1,4 @@
-package com.alexander.scratchpad.crypto.bcrypt;
+package com.alexander.scratchpad.crypto.bcrypt.results;
 
 import java.util.LinkedList;
 import java.util.List;

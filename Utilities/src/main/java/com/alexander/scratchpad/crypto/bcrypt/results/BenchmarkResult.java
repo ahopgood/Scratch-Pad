@@ -1,4 +1,4 @@
-package com.alexander.scratchpad.crypto.bcrypt;
+package com.alexander.scratchpad.crypto.bcrypt.results;
 
 /**
  * Created by Alexander on 13/08/2017.
@@ -8,7 +8,7 @@ public class BenchmarkResult {
     private long finish;
     private int costFactor;
     
-    BenchmarkResult(long start, long finish, int costFactor){
+    public BenchmarkResult(long start, long finish, int costFactor){
         this.start = start;
         this.finish = finish;
         this.costFactor = costFactor;

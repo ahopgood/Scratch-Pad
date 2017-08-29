@@ -1,6 +1,12 @@
 package com.alexander.scratchpad.crypto.bcrypt;
 
 import com.alexander.scratchpad.conversion.BCryptHash;
+import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlBenchmarkResultsFormatter;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlDictionaryResultsFormatter;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.StandardOutBenchmarkResultsFormatter;
+import com.alexander.scratchpad.crypto.bcrypt.results.formatters.StandardOutDictionaryResultsFormatter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,20 +86,8 @@ public class BCryptBenchmarkTest {
         List<BenchmarkResult> results = bench.runBenchmark();
         assertNotNull(results);
         assertEquals(10, results.size());
-
-
-        bench.printBenchmark(new BenchmarkResultsFormatter() {
-            @Override
-            public String format(List<BenchmarkResult> results) {
-                StringBuilder output = new StringBuilder();
-                results.forEach(result -> {
-                    String resultString = "Cost:" + result.getCostFactor() + "\t Time:" + (result.getFinish() - result.getStart()) + "ms\n";
-                    System.out.print(resultString);
-                    output.append(resultString);
-                });
-                return output.toString();
-            }
-        }, results);
+        
+        bench.printBenchmark(new StandardOutBenchmarkResultsFormatter(), results);
     }
 
     @Test
@@ -102,29 +96,8 @@ public class BCryptBenchmarkTest {
         List<BenchmarkResult> results = bench.runBenchmark();
         assertNotNull(results);
         assertEquals(10, results.size());
-
-
-        bench.printBenchmark(new BenchmarkResultsFormatter() {
-            @Override
-            public String format(List<BenchmarkResult> results) {
-                StringBuilder output = new StringBuilder();
-
-                String headerString = "<table>\n\t<tr><th>Cost</th><th>Time</th></tr>\n";
-                System.out.print(headerString);
-                output.append(headerString);
-
-                results.forEach(result -> {
-                    String resultString = "\t<tr><td>" + result.getCostFactor() + "</td><td>" + (result.getFinish() - result.getStart()) + "ms</td></tr>\n";
-                    System.out.print(resultString);
-                    output.append(resultString);
-                });
-
-                String close = "</table>\n";
-                System.out.print(close);
-                output.append(close);
-                return output.toString();
-            }
-        }, results);
+        
+        bench.printBenchmark(new HtmlBenchmarkResultsFormatter(), results);
     }
 
     @Test
@@ -198,7 +171,7 @@ public class BCryptBenchmarkTest {
         assertEquals(new Long(100000000), dictionaryResult);
     }
 
-    @Test
+    @Test (expected = BCryptHashException.class)
     public void testGetDictionaryBenchmark_givenBenchmarkResultListIsNull() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
@@ -208,7 +181,7 @@ public class BCryptBenchmarkTest {
         assertEquals(true, dictionaryResult.isEmpty());
     }
 
-    @Test
+    @Test (expected = BCryptHashException.class)
     public void testGetDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListIsNull() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
@@ -235,7 +208,8 @@ public class BCryptBenchmarkTest {
         results.add(new BenchmarkResult(0, 100, 10));
 
         List<DictionaryResult> dictionaryResult = bench.getDictionaryBenchmark(results, new LinkedList<>());
-        assertEquals(true, dictionaryResult.isEmpty());
+        assertEquals(1, dictionaryResult.size());
+        assertEquals(true, dictionaryResult.get(0).getResults().isEmpty());
     }
 
     @Test
@@ -270,7 +244,6 @@ public class BCryptBenchmarkTest {
         String output = bench.printDictionaryResults(new StandardOutDictionaryResultsFormatter(), dictionaryResult);
         System.out.println(output);
     }
-
     @Test
     public void testPrintDictionaryBenchmakToHTML_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
@@ -289,4 +262,10 @@ public class BCryptBenchmarkTest {
         System.out.println(output);
     }
 
+    @Test
+    public void testValidate_givenNullArgs(){
+
+      String[] args = null;
+        assertEquals(BCryptBenchmark.buildHelp(), BCryptBenchmark.validate(args));
+    }
 }
