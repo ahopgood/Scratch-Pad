@@ -41,10 +41,10 @@ public class BCryptBenchmark {
                         REPORT dictionaryReport = REPORT.valueOf(args[3]);
                         switch (dictionaryReport){
                             case STDOUT:
-                                bench.printDictionaryResults(new StandardOutDictionaryResultsFormatter(), dictResults);
+                                System.out.println(bench.printDictionaryResults(new StandardOutDictionaryResultsFormatter(), dictResults));
                                 break;
                             case HTML:
-                                bench.printDictionaryResults(new HtmlDictionaryResultsFormatter(), dictResults);
+                                System.out.println(bench.printDictionaryResults(new HtmlDictionaryResultsFormatter(), dictResults));
                                 break;
                         }
                     }
@@ -107,10 +107,12 @@ public class BCryptBenchmark {
         } catch (IllegalArgumentException iae){
             return "Parameter "+third+" ["+args[third]+" does not match "+REPORT.HTML.name()+" or "+REPORT.STDOUT.name();
         }
-        try {
-            REPORT.valueOf(args[fourth]);
-        } catch (IllegalArgumentException iae){
-            return "Parameter "+fourth+" ["+args[fourth]+" does not match "+REPORT.HTML.name()+" or "+REPORT.STDOUT.name();
+        if (args.length == 4) {
+            try {
+                REPORT.valueOf(args[fourth]);
+            } catch (IllegalArgumentException iae) {
+                return "Parameter " + fourth + " [" + args[fourth] + " does not match " + REPORT.HTML.name() + " or " + REPORT.STDOUT.name();
+            }
         }
         return "";
     }
