@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static com.alexander.scratchpad.jwt.jwks.model.KeyType.EC;
 import static com.alexander.scratchpad.jwt.jwks.model.KeyType.HmacSHA256;
 import static com.alexander.scratchpad.jwt.jwks.model.KeyType.HmacSHA384;
 import static com.alexander.scratchpad.jwt.jwks.model.KeyType.HmacSHA512;
@@ -28,7 +29,7 @@ import static com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg.RS512;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JwtAlgTest {
+class JwtAlgTest {
 
     @ParameterizedTest
     @MethodSource("createAlgorithmsAndKeyTypes")
@@ -36,7 +37,7 @@ public class JwtAlgTest {
         if (e == null) {
             assertThat(alg.getKeyType()).isEqualTo(expectedKeyType);
         } else {
-            assertThrows(RuntimeException.class, () -> alg.getKeyType());
+            assertThrows(RuntimeException.class, alg::getKeyType);
         }
     }
 
@@ -48,9 +49,9 @@ public class JwtAlgTest {
                 Arguments.of(HS256, HmacSHA256,  null),
                 Arguments.of(HS384, HmacSHA384,  null),
                 Arguments.of(HS512, HmacSHA512,  null),
-                Arguments.of(ES256, null, RuntimeException.class),
-                Arguments.of(ES384, null, RuntimeException.class),
-                Arguments.of(ES512, null, RuntimeException.class),
+                Arguments.of(ES256, EC, null),
+                Arguments.of(ES384, EC, null),
+                Arguments.of(ES512, EC, null),
                 Arguments.of(PS256, null, RuntimeException.class),
                 Arguments.of(PS384, null, RuntimeException.class),
                 Arguments.of(PS512, null, RuntimeException.class)

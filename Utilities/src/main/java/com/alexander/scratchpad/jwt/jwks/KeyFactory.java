@@ -17,6 +17,7 @@ public class KeyFactory {
     private final KeyGenerator hmacSha512KeyGenerator;
 
     //Perhaps switch to a map based initialisation of key generators?
+    //Can reduce the need to use so many switch statements?
     public KeyFactory() throws NoSuchAlgorithmException {
         rsaKeyPairGenerator = KeyPairGenerator.getInstance(KeyType.RSA.name());
         hmacSha256KeyGenerator = KeyGenerator.getInstance(KeyType.HmacSHA256.name());

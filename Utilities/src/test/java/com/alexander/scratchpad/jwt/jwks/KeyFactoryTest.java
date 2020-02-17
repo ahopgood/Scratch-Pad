@@ -29,16 +29,16 @@ import static com.alexander.scratchpad.jwt.jwks.model.KeyType.RSA;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class KeyFactoryTest {
+class KeyFactoryTest {
 
-    KeyFactory generator = new KeyFactory();
+    private KeyFactory generator = new KeyFactory();
 
-    public KeyFactoryTest() throws NoSuchAlgorithmException {
+    KeyFactoryTest() throws NoSuchAlgorithmException {
     }
 
     @ParameterizedTest
     @MethodSource("createJwtAndAlg")
-    public void getPrivateKeyPair(JwtAlg alg, KeyType expectedAlgorithm, Class<Exception> e) throws NoSuchAlgorithmException {
+    void getPrivateKeyPair(JwtAlg alg, KeyType expectedAlgorithm, Class<Exception> e) throws NoSuchAlgorithmException {
         if (e == null) {
             assertThat(generator.getKeyPair(alg).getPrivate().getAlgorithm()).isEqualTo(expectedAlgorithm.name());
         } else {
@@ -65,7 +65,7 @@ public class KeyFactoryTest {
 
     @ParameterizedTest
     @MethodSource("createSymmetricJwtAndAlg")
-    public void testGetSecretKey(JwtAlg alg, KeyType keyType, Class<Exception> e) throws NoSuchAlgorithmException {
+    void testGetSecretKey(JwtAlg alg, KeyType keyType, Class<Exception> e) throws NoSuchAlgorithmException {
         if (e == null) {
             assertThat(generator.getSecretKey(alg).getAlgorithm()).isEqualTo(keyType.name());
         } else {

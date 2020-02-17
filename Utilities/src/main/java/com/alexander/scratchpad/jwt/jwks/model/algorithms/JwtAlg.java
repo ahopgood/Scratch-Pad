@@ -20,6 +20,7 @@ public enum JwtAlg {
             case ES256:
             case ES384:
             case ES512:
+                return KeyType.EC;
             case PS256:
             case PS384:
             case PS512:
