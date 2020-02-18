@@ -3,7 +3,6 @@ package com.alexander.scratchpad.jwt.jwks;
 import com.alexander.scratchpad.jwt.jwks.exception.KeyException;
 import com.alexander.scratchpad.jwt.jwks.model.PrivateJsonWebKey;
 import com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg;
-import sun.security.rsa.RSAPrivateCrtKeyImpl;
 
 import java.math.BigInteger;
 import java.security.spec.RSAPrivateCrtKeySpec;
