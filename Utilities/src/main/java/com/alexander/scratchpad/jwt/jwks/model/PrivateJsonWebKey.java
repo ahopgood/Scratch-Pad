@@ -24,6 +24,7 @@ public class PrivateJsonWebKey {
     public static final String PRIVATE_EXPONENT = "d";
     public static final String DQ = "dq";
     public static final String DP = "dp";
+    //Chinese Remainder Theorem Coefficient
     public static final String QI = "qi";
 
     @JsonProperty(ALGORITHM)

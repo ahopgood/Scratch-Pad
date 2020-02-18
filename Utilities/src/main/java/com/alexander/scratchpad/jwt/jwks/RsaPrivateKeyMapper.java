@@ -5,12 +5,15 @@ import com.alexander.scratchpad.jwt.jwks.model.PrivateJsonWebKey;
 import com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg;
 import sun.security.rsa.RSAPrivateCrtKeyImpl;
 
+import java.math.BigInteger;
+import java.security.spec.RSAPrivateCrtKeySpec;
 
-public class RsaPrivateKeyMapper implements Mapper<PrivateJsonWebKey, RSAPrivateCrtKeyImpl> {
+
+public class RsaPrivateKeyMapper implements Mapper<PrivateJsonWebKey, RSAPrivateCrtKeySpec> {
 
 
     @Override
-    public PrivateJsonWebKey map(RSAPrivateCrtKeyImpl privateKey, String keyId, JwtAlg jwtAlg) {
+    public PrivateJsonWebKey map(RSAPrivateCrtKeySpec privateKey, String keyId, JwtAlg jwtAlg) {
         // perform a basic privateKey.getAlgorithm() vs jwtAlg.getKeyType
         if (privateKey == null) {
             throw new KeyException("Private Key cannot be null");
@@ -18,18 +21,13 @@ public class RsaPrivateKeyMapper implements Mapper<PrivateJsonWebKey, RSAPrivate
         if (jwtAlg == null) {
             throw new KeyException("A " + JwtAlg.class.getName() + " is required");
         }
-        if (! privateKey.getAlgorithm().equalsIgnoreCase(jwtAlg.getKeyType().name())) {
-            throw new KeyException("Private Key algorithm [" + privateKey.getAlgorithm()
-                    + "] does not match expected Jwt Algorithm " + jwtAlg.getKeyType().name()
-                    + " of type " + jwtAlg.name());
-        }
         if (keyId == null || keyId.trim().isEmpty()) {
             throw new KeyException("A key ID is required to use a JWKS");
         }
         return new PrivateJsonWebKey(
                 jwtAlg.name(),
                 keyId,
-                privateKey.getAlgorithmId().getName(),
+                "RSA",
                 privateKey.getPublicExponent().toString(),
                 privateKey.getModulus().toString(),
                 privateKey.getPrimeP().toString(),
@@ -39,5 +37,21 @@ public class RsaPrivateKeyMapper implements Mapper<PrivateJsonWebKey, RSAPrivate
                 privateKey.getPrimeExponentP().toString(),
                 privateKey.getCrtCoefficient().toString()
         );
+    }
+
+    @Override
+    public RSAPrivateCrtKeySpec map(PrivateJsonWebKey privateJsonWebKey) {
+        RSAPrivateCrtKeySpec keySpec = new RSAPrivateCrtKeySpec(
+                new BigInteger(privateJsonWebKey.getModulus()),
+                new BigInteger(privateJsonWebKey.getPublicExponent()),
+                new BigInteger(privateJsonWebKey.getPrivateExponent()),
+                new BigInteger(privateJsonWebKey.getPrimeP()),
+                new BigInteger(privateJsonWebKey.getPrimeQ()),
+                new BigInteger(privateJsonWebKey.getDp()),
+                new BigInteger(privateJsonWebKey.getDq()),
+                new BigInteger(privateJsonWebKey.getQi())
+
+        );
+        return keySpec;
     }
 }
