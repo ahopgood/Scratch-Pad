@@ -2,13 +2,15 @@ pipeline {
 	agent { label 'Java11' }
 	stages {
 	    stage('clean up') {
-            wrappers {
-                preBuildCleanup { // Clean before build
-                    includePattern('**/target/**')
-                    deleteDirectories()
-                    cleanupParameter('CLEANUP')
+	        steps {
+                wrappers {
+                    preBuildCleanup { // Clean before build
+                        includePattern('**/target/**')
+                        deleteDirectories()
+                        cleanupParameter('CLEANUP')
+                    }
                 }
-            }
+	        }
 	    }
     	stage('build') {
         	steps {
