@@ -3,7 +3,7 @@ pipeline {
 	stages {
 	    stage('clean up') {
 	        steps {
-                cleanWs deleteDirs: true
+                cleanWs deleteDirs: true,  patterns:(pattern: '**/target/**', type: INCLUDE)
 	        }
 	    }
     	stage('build') {
