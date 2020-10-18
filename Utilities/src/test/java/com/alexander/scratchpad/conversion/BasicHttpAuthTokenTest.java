@@ -8,16 +8,16 @@ import org.junit.Test;
 
 public class BasicHttpAuthTokenTest {
 
-	private final String sampleBase64Token 	= "dXNlcjpwYXNzd29yZA==";
-	private final String sampleUsername 		= "user";
-	private final String samplePassword		= "password";
+	private final String sampleBase64Token = "dXNlcjpwYXNzd29yZA==";
+	private final String sampleUsername = "user";
+	private final String samplePassword	= "password";
 	private final String sampleBase64Username = "dXNlcjo=";
 	private final String sampleBase64Password	= "OnBhc3N3b3Jk";
 	
 	private final String usernameWhitespacePassword	= "dXNlcjogICAg";
 	private final String whitespaceUsernamePassword	= "ICAgIDpwYXNzd29yZA==";
-	private final String emptyToken					= "";
-	private final String emptyBase64Token				= "Og==";
+	private final String emptyToken = "";
+	private final String emptyBase64Token = "Og==";
 
 	private final String whitespaceToken = "    ";
 	private final String nonBase64Token = ";'@;./[]#~'=_+&$(^&*";
