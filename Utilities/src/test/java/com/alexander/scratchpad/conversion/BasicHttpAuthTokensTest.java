@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BasicHttpAuthTokenTest {
+public class BasicHttpAuthTokensTest {
 
 	private final String sampleBase64Token = "dXNlcjpwYXNzd29yZA==";
 	private final String sampleUsername = "user";
