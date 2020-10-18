@@ -3,13 +3,14 @@ package com.alexander.scratchpad.crypto.bcrypt;
 import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
 import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
 import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlDictionaryResultsFormatter;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Alexander on 21/08/2017.
@@ -17,7 +18,7 @@ import static org.junit.Assert.*;
 public class HtmlDictionaryResultsFormatterTest {
 
     @Test
-    public void testPrintDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
+    void testPrintDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
