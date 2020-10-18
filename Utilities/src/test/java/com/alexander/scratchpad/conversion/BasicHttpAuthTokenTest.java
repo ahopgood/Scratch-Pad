@@ -8,21 +8,21 @@ import org.junit.Test;
 
 public class BasicHttpAuthTokenTest {
 
-	private String sampleBase64Token 	= "dXNlcjpwYXNzd29yZA==";
-	private String sampleUsername 		= "user";
-	private String samplePassword		= "password";
-	private String sampleBase64Username = "dXNlcjo=";
-	private String sampleBase64Password	= "OnBhc3N3b3Jk";
+	private final String sampleBase64Token 	= "dXNlcjpwYXNzd29yZA==";
+	private final String sampleUsername 		= "user";
+	private final String samplePassword		= "password";
+	private final String sampleBase64Username = "dXNlcjo=";
+	private final String sampleBase64Password	= "OnBhc3N3b3Jk";
 	
-	private String usernameWhitespacePassword	= "dXNlcjogICAg";
-	private String whitespaceUsernamePassword	= "ICAgIDpwYXNzd29yZA==";
-	private String emptyToken					= "";
-	private String emptyBase64Token				= "Og==";
+	private final String usernameWhitespacePassword	= "dXNlcjogICAg";
+	private final String whitespaceUsernamePassword	= "ICAgIDpwYXNzd29yZA==";
+	private final String emptyToken					= "";
+	private final String emptyBase64Token				= "Og==";
 
-	private String whitespaceToken					= "    ";
-	private String nonBase64Token					= ";'@;./[]#~'=_+&$(^&*";
-	private String tokenWithMultipleSemiColons 		= "dXNlcjpwYXNzd29yZDpzZWNvbmQ6dGhpcmQ=";
-	private String tokenWithoutSemiColon			= "dXNlcg==";
+	private final String whitespaceToken = "    ";
+	private final String nonBase64Token = ";'@;./[]#~'=_+&$(^&*";
+	private final String tokenWithMultipleSemiColons = "dXNlcjpwYXNzd29yZDpzZWNvbmQ6dGhpcmQ=";
+	private final String tokenWithoutSemiColon = "dXNlcg==";
 	
 	@Before
 	public void setUp() throws Exception {
