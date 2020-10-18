@@ -3,15 +3,15 @@ package com.alexander.scratchpad.crypto.bcrypt;
 import com.alexander.scratchpad.crypto.bcrypt.results.BenchmarkResult;
 import com.alexander.scratchpad.crypto.bcrypt.results.DictionaryResult;
 import com.alexander.scratchpad.crypto.bcrypt.results.formatters.Formatting;
-import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlDictionaryResultsFormatter;
 import com.alexander.scratchpad.crypto.bcrypt.results.formatters.StandardOutDictionaryResultsFormatter;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Alexander on 22/08/2017.
@@ -24,37 +24,37 @@ public class StandardOutDictionaryResultsFormatterTest {
     int week = 7 * day;
     
     @Test
-    public void testMillis(){
+    void testMillis(){
         StandardOutDictionaryResultsFormatter test = new StandardOutDictionaryResultsFormatter();
         assertEquals("0 hr, 0 min, 0 sec, 200 ms", Formatting.getFormattedTime(200));
     }
 
     @Test
-    public void testSeconds(){
+    void testSeconds(){
         StandardOutDictionaryResultsFormatter test = new StandardOutDictionaryResultsFormatter();
         assertEquals("0 hr, 0 min, 2 sec, 200 ms", Formatting.getFormattedTime(2_200));
     }
 
     @Test
-    public void testMinutes(){
+    void testMinutes(){
         StandardOutDictionaryResultsFormatter test = new StandardOutDictionaryResultsFormatter();
         assertEquals("0 hr, 2 min, 2 sec, 200 ms", Formatting.getFormattedTime(122_200));
     }
 
     @Test
-    public void testHours(){
+    void testHours(){
         StandardOutDictionaryResultsFormatter test = new StandardOutDictionaryResultsFormatter();
         assertEquals("2 hr, 2 min, 2 sec, 200 ms", Formatting.getFormattedTime(7_322_200));
     }
 
     @Test
-    public void testDays(){
+    void testDays(){
         StandardOutDictionaryResultsFormatter test = new StandardOutDictionaryResultsFormatter();
         assertEquals("2 hr, 2 min, 2 sec, 200 ms", Formatting.getFormattedTime(7_322_200));
     }
 
     @Test
-    public void testPrintDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
+    void testPrintDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));

@@ -1,12 +1,12 @@
 package com.alexander.scratchpad.jwt.jwks.model;
 
-
 import com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
 
 import java.io.IOException;
+import org.junit.jupiter.api.Test;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +30,7 @@ public class PrivateJsonWebKeyTest {
     // for a break down of the values dp dp anc qi for the chinese remainder theorem to speed up computation.
 
     @Test
-    public void testFromJson() throws IOException {
+    void testFromJson() throws IOException {
         JsonNode output = mapper.readValue(privateKeyJson, JsonNode.class);
         //Public key values
         assertThat(output.get(PrivateJsonWebKey.ALGORITHM).textValue()).isEqualTo("RS256");
@@ -48,7 +48,7 @@ public class PrivateJsonWebKeyTest {
     }
 
     @Test
-    public void testToJson() throws IOException {
+    void testToJson() throws IOException {
         PrivateJsonWebKey webKey = PrivateJsonWebKey.builder()
                 .alg(JwtAlg.RS256.toString())
                 .kid("1")

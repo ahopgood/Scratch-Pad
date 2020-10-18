@@ -1,9 +1,11 @@
 package com.alexander.scratchpad.crypto.bcrypt;
 
 import com.alexander.scratchpad.conversion.BCryptHash;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BCryptHashTest {
 
@@ -17,28 +19,28 @@ public class BCryptHashTest {
     String gen3_crypt   = BCryptHash.blowfish_gen3_crypt+cost+saltString+hashString;
 
     @Test
-    public void testGen1BlowfishHash(){
+    void testGen1BlowfishHash(){
         BCryptHash hash = new BCryptHash(gen1);
         assertEquals(BCryptHash.blowfish_gen1, hash.extractPrefixHeader(gen1));
     }
 
 
     @Test
-    public void testGen2BlowfishHash(){
+    void testGen2BlowfishHash(){
         BCryptHash hash = new BCryptHash(gen1);
         assertEquals(BCryptHash.blowfish_gen2, hash.extractPrefixHeader(gen2));
     }
 
 
     @Test
-    public void testGen3BlowfishHash(){
+    void testGen3BlowfishHash(){
         BCryptHash hash = new BCryptHash(gen3);
         assertEquals(BCryptHash.blowfish_gen3, hash.extractPrefixHeader(gen3));
     }
 
 
     @Test
-    public void testGen3_cryptBlowfishHash(){
+    void testGen3_cryptBlowfishHash(){
         BCryptHash hash = new BCryptHash(gen3_crypt);
         assertEquals(BCryptHash.blowfish_gen3_crypt, hash.extractPrefixHeader(gen3_crypt));
     }
@@ -50,33 +52,32 @@ public class BCryptHashTest {
     String malformedCost    = BCryptHash.blowfish_gen3+"aa$"+saltString+hashString;
 
     @Test
-    public void testAnyGen_costIsNegative_BlowfishHash(){
+    void testAnyGen_costIsNegative_BlowfishHash(){
         BCryptHash hash = new BCryptHash(negativeCost);
         assertEquals(-1, hash.extractCost(negativeCost));
     }
 
     @Test
-    public void testAnyGen_costIsZero_BlowfishHash(){
+    void testAnyGen_costIsZero_BlowfishHash(){
         BCryptHash hash = new BCryptHash(zeroCost);
         assertEquals(0, hash.extractCost(zeroCost));
     }
 
     @Test
-    public void testAnyGen_costIsTen_BlowfishHash(){
+    void testAnyGen_costIsTen_BlowfishHash(){
         BCryptHash hash = new BCryptHash(tenCost);
         assertEquals(10, hash.extractCost(tenCost));
     }
 
     @Test
-    public void testAnyGen_costIsGreaterThanLimit_BlowfishHash(){
+    void testAnyGen_costIsGreaterThanLimit_BlowfishHash(){
         BCryptHash hash = new BCryptHash(thirtyTwoCost);
         assertEquals(-1, hash.extractCost(thirtyTwoCost));
     }
 
-    @Test (expected = NumberFormatException.class)
-    public void testAnyGen_costIsMalformed_BlowfishHash(){
-        BCryptHash hash = new BCryptHash(malformedCost);
-        assertEquals(-1, hash.extractCost(malformedCost));
+    @Test
+    void testAnyGen_costIsMalformed_BlowfishHash(){
+        assertThrows(NumberFormatException.class, () -> new BCryptHash(malformedCost));
     }
 
     String emptySalt        = BCryptHash.blowfish_gen3+cost+""+hashString;
@@ -86,31 +87,30 @@ public class BCryptHashTest {
     String longSalt         = BCryptHash.blowfish_gen3+cost+saltString+"yyy"+hashString;
 
     @Test
-    public void testAnyGen_withEmptySalt_BlowfishHash(){
+    void testAnyGen_withEmptySalt_BlowfishHash(){
         BCryptHash hash = new BCryptHash(emptySalt);
         assertEquals("", hash.extractSalt(emptySalt));
     }
 
     @Test
-    public void testAnyGen_withSaltPresent_BlowfishHash(){
+    void testAnyGen_withSaltPresent_BlowfishHash(){
         BCryptHash hash = new BCryptHash(saltPresent);
         assertEquals(saltString, hash.extractSalt(saltPresent));
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void testAnyGen_withMalformedSalt_BlowfishHash(){
-        BCryptHash hash = new BCryptHash(malformedSalt);
-        assertEquals("", hash.extractSalt(malformedSalt));
+    @Test
+    void testAnyGen_withMalformedSalt_BlowfishHash(){
+        assertThrows(IllegalArgumentException.class, () -> new BCryptHash(malformedSalt));
     }
 
     @Test
-    public void testAnyGen_withShortSalt_BlowfishHash(){
+    void testAnyGen_withShortSalt_BlowfishHash(){
         BCryptHash hash = new BCryptHash(shortSalt);
         assertEquals("", hash.extractSalt(shortSalt));
     }
 
     @Test
-    public void testAnyGen_withLongSalt_BlowfishHash(){
+    void testAnyGen_withLongSalt_BlowfishHash(){
         BCryptHash hash = new BCryptHash(longSalt);
         assertEquals("", hash.extractSalt(longSalt));
     }
@@ -122,31 +122,30 @@ public class BCryptHashTest {
     String longHash         = BCryptHash.blowfish_gen3+cost+saltString+hashString+"yyy";
 
     @Test
-    public void testAnyGen_withEmptyHash_BlowfishHash(){
+    void testAnyGen_withEmptyHash_BlowfishHash(){
         BCryptHash hash = new BCryptHash(emptyHash);
         assertEquals("", hash.extractHash(emptyHash));
     }
 
     @Test
-    public void testAnyGen_withHashPresent_BlowfishHash(){
+    void testAnyGen_withHashPresent_BlowfishHash(){
         BCryptHash hash = new BCryptHash(hashPresent);
         assertEquals(hashString, hash.extractHash(hashPresent));
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void testAnyGen_withMalformedHash_BlowfishHash(){
-        BCryptHash hash = new BCryptHash(malformedHash);
-        assertEquals("", hash.extractHash(malformedHash));
+    @Test
+    void testAnyGen_withMalformedHash_BlowfishHash(){
+        assertThrows(IllegalArgumentException.class, () -> new BCryptHash(malformedHash));
     }
 
     @Test
-    public void testAnyGen_withShortHash_BlowfishHash(){
+    void testAnyGen_withShortHash_BlowfishHash(){
         BCryptHash hash = new BCryptHash(shortHash);
         assertEquals("", hash.extractHash(shortHash));
     }
 
     @Test
-    public void testAnyGen_withLongHash_BlowfishHash(){
+    void testAnyGen_withLongHash_BlowfishHash(){
         BCryptHash hash = new BCryptHash(longHash);
         assertEquals("", hash.extractHash(longHash));
     }

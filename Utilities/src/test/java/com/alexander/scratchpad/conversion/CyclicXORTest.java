@@ -1,11 +1,10 @@
 package com.alexander.scratchpad.conversion;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class CyclicXORTest {
 
@@ -16,25 +15,18 @@ public class CyclicXORTest {
 	String eTicketNumberStr = "AB123456789C";
 	
 	CyclicXOR xor = new CyclicXOR();
-	
-	@Before
-	public void setUp() throws Exception {
-	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test @Ignore public void
-	testWatermarkingXORWithLongIncorrect() {
+	@Test
+    @Disabled
+    void testWatermarkingXORWithLongIncorrect() {
 		byte[] result = xor.xorSeed(unobfuscatedSeedBytes, eTicketNumber);
 		printArray(obfuscatedSeedBytes);
 		printArray(result);
 		assertArrayEquals(obfuscatedSeedBytes, result);
 	}
 
-	@Test public void 
-	testWatermarkingXORWithLongCorrect() {
+	@Test
+    void testWatermarkingXORWithLongCorrect() {
 		byte[] result = xor.xorSeedCorrect(unobfuscatedSeedBytes, eTicketNumber);
 		printArray(obfuscatedSeedBytes);
 		printArray(result);
@@ -42,21 +34,21 @@ public class CyclicXORTest {
 	}
 
 	
-	@Test public void 
-	testWatermarkingXORWithString() {
+	@Test
+    void testWatermarkingXORWithString() {
 		byte[] result = xor.xorSeed(unobfuscatedSeedBytes, eTicketNumberStr);
 		printArray(obfuscatedSeedBytes);
 		printArray(result);
 		assertArrayEquals(obfuscatedSeedBytes, result);
 	}
 
-	@Test public void
-	testDefaultVisValProviderXORValue(){
+	@Test
+    void testDefaultVisValProviderXORValue(){
 		assertArrayEquals(obfuscatedSeedBytes, xor.getUnobfuscatedSeed(unobfuscatedSeedBytes, xor.getVisualValidationXORValue(eTicketNumberStr)));
 	}
 
-	@Test public void
-	testUKServerObfuscateSeed(){
+	@Test
+    void testUKServerObfuscateSeed(){
 		byte[] result = xor.obfuscatedSeed(eTicketNumberStr, unobfuscatedSeedBytes);
 //				xor.xorSeed(unobfuscatedSeedBytes, eTicketNumber);
 		printArray(obfuscatedSeedBytes);

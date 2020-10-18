@@ -3,9 +3,10 @@ package com.alexander.scratchpad.jwt.jwks.model;
 import com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
 
 import java.io.IOException;
+import org.junit.jupiter.api.Test;
+
 
 import static com.alexander.scratchpad.jwt.jwks.model.JsonWebKey.ALGORITHM;
 import static com.alexander.scratchpad.jwt.jwks.model.JsonWebKey.KEY_ID;
@@ -22,7 +23,7 @@ public class JsonWebKeyTest {
     private static String expected = "\"{\"alg\":\"RS256\",\"e\":null,\"kid\":\"1\",\"kty\":\"RSA\",\"n\":null,\"use\":null}\"";
 
     @Test
-    public void testToJson() throws IOException {
+    void testToJson() throws IOException {
         JsonWebKey webKey = JsonWebKey.builder()
                 .keyType(KeyType.RSA.toString())
                 .alg(JwtAlg.RS256.toString())

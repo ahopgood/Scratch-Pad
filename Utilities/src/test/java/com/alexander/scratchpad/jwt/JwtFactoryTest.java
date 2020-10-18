@@ -1,22 +1,14 @@
 package com.alexander.scratchpad.jwt;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JwtFactoryTest {
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
 
     private String secret = "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy";
     private String service = "myservice";
@@ -29,25 +21,25 @@ public class JwtFactoryTest {
 
     private Object token = null;
 
-    @Test (expected = JwtEncodingException.class)
-    public void testGenerateJwtString_fromNullServiceToken() throws JwtEncodingException {
-        JwtFactory.generateJwtString(null, secret);
-    }
-
-    @Test (expected = JwtEncodingException.class)
-    public void testGenerateJwtString_givenNullSecret() throws JwtEncodingException {
-        JwtFactory.generateJwtString(token, null);
+    @Test
+    void testGenerateJwtString_fromNullServiceToken() {
+        assertThrows(JwtEncodingException.class, () -> JwtFactory.generateJwtString(null, secret));
     }
 
     @Test
-    public void testGenerateJwtString_givenServiceToken() throws JwtEncodingException {
+    void testGenerateJwtString_givenNullSecret() {
+        assertThrows(JwtEncodingException.class, () -> JwtFactory.generateJwtString(token, null));
+    }
+
+    @Test
+    void testGenerateJwtString_givenServiceToken() throws JwtEncodingException {
         String encodedToken = JwtFactory.generateJwtString(new ServiceToken(service), secret);
         System.out.println(encodedToken);
         assertEquals(serviceToken,encodedToken);
     }
 
     @Test
-    public void testGenerateJwtString_fromExpiringToken() throws JwtEncodingException {
+    void testGenerateJwtString_fromExpiringToken() throws JwtEncodingException {
         ExpiringToken expiringToken = new ExpiringToken();
         expiringToken.setSub(subject);
         expiringToken.setExp(
