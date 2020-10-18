@@ -8,19 +8,20 @@ import org.junit.Test;
 
 public class HexTest {
 
+    // UTF-8 Bytes
 	//Hex String vs Byte values
-	private String zero 	= "0";
-	private byte[] zeroArray	= new byte[]{0};
-	private String nine		= "9";
-	private byte[] nineArray	= new byte[]{9};
-	private String ten		= "A";
-	private byte[] tenArray	= new byte[]{10};
-	private String fifteen	= "F";
-	private byte[] fifteenArray	= new byte[]{15};
-	private String sixteen	= "10";
-	private byte[] sixteenArray	= new byte[]{16};
+	private String zero 	    = "0";
+	private byte[] zeroArray    = new byte[]{48};
+	private String nine	        = "9";
+	private byte[] nineArray	= new byte[]{57};
+	private String ten		    = "A";
+	private byte[] tenArray	    = new byte[]{65};
+	private String fifteen	    = "F";
+	private byte[] fifteenArray	= new byte[]{70};
+	private String sixteen	    = "10";
+	private byte[] sixteenArray	= new byte[]{49,48};
 	private String oneHundredTwentySeven 		= "80";
-	private byte[] oneHunredAndTwentySevenArray	= new byte[]{127};
+	private byte[] oneHunredAndTwentySevenArray	= new byte[]{56,48};
 	
 	private String nonHexString			= "GGG";
 	private String emptyHexString 		= "";
