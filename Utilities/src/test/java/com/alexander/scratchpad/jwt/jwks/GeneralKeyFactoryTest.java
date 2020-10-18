@@ -12,6 +12,7 @@ import sun.security.rsa.RSAPrivateCrtKeyImpl;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.util.stream.Stream;
@@ -107,7 +108,7 @@ class GeneralKeyFactoryTest {
 
     @Test
     void getKey_givenRSAPrivateCrtKeySpec() throws InvalidKeySpecException {
-        RSAPrivateCrtKeyImpl keyImpl = generator.getKey(getRSAPrivateCrtKeySpec());
+        RSAPrivateCrtKey keyImpl = generator.getKey(getRSAPrivateCrtKeySpec());
         assertThat(keyImpl.getModulus()).isEqualTo(modulus);
         assertThat(keyImpl.getPublicExponent()).isEqualTo(publicExponent);
         assertThat(keyImpl.getPrivateExponent()).isEqualTo(privateExponent);
