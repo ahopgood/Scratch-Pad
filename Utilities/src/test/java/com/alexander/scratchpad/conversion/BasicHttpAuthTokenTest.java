@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BasicHttpAuthTokensTest {
+public class BasicHttpAuthTokenTest {
 
 	private final String sampleBase64Token = "dXNlcjpwYXNzd29yZA==";
 	private final String sampleUsername = "user";
@@ -20,8 +20,7 @@ public class BasicHttpAuthTokensTest {
 	private final String emptyBase64Token = "Og==";
 
 	private final String whitespaceToken = "    ";
-//	private final String nonBase64Token = ";'@;./[]#~'=_+&$(^&*";
-    private final String nonBase64Token = "*a";
+	private final String nonBase64Token = ";'@;./[]#~'=_+&$(^&*";
 	private final String tokenWithMultipleSemiColons = "dXNlcjpwYXNzd29yZDpzZWNvbmQ6dGhpcmQ=";
 	private final String tokenWithoutSemiColon = "dXNlcg==";
 	
