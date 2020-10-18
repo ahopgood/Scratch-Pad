@@ -3,13 +3,7 @@ pipeline {
 	stages {
 	    stage('clean up') {
 	        steps {
-                wrappers {
-                    preBuildCleanup { // Clean before build
-                        includePattern('**/target/**')
-                        deleteDirectories()
-                        cleanupParameter('CLEANUP')
-                    }
-                }
+                cleanWs deleteDirs: true
 	        }
 	    }
     	stage('build') {
