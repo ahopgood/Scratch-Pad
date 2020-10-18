@@ -20,7 +20,7 @@ public class BasicHttpAuthTokenTest {
 	private String emptyBase64Token				= "Og==";
 
 	private String whitespaceToken					= "    ";
-	private String nonBase64Token					= ";'@;./[]#~'=_+&$(£^&*";
+	private String nonBase64Token					= ";'@;./[]#~'=_+&$(^&*";
 	private String tokenWithMultipleSemiColons 		= "dXNlcjpwYXNzd29yZDpzZWNvbmQ6dGhpcmQ=";
 	private String tokenWithoutSemiColon			= "dXNlcg==";
 	
