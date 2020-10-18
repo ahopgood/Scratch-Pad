@@ -34,21 +34,21 @@ public class CyclicXORTest {
 	}
 
 	
-	@Test public void 
-	testWatermarkingXORWithString() {
+	@Test
+    void testWatermarkingXORWithString() {
 		byte[] result = xor.xorSeed(unobfuscatedSeedBytes, eTicketNumberStr);
 		printArray(obfuscatedSeedBytes);
 		printArray(result);
 		assertArrayEquals(obfuscatedSeedBytes, result);
 	}
 
-	@Test public void
-	testDefaultVisValProviderXORValue(){
+	@Test
+    void testDefaultVisValProviderXORValue(){
 		assertArrayEquals(obfuscatedSeedBytes, xor.getUnobfuscatedSeed(unobfuscatedSeedBytes, xor.getVisualValidationXORValue(eTicketNumberStr)));
 	}
 
-	@Test public void
-	testUKServerObfuscateSeed(){
+	@Test
+    void testUKServerObfuscateSeed(){
 		byte[] result = xor.obfuscatedSeed(eTicketNumberStr, unobfuscatedSeedBytes);
 //				xor.xorSeed(unobfuscatedSeedBytes, eTicketNumber);
 		printArray(obfuscatedSeedBytes);
