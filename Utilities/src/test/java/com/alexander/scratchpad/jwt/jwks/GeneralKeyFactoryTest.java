@@ -4,7 +4,6 @@ package com.alexander.scratchpad.jwt.jwks;
 import com.alexander.scratchpad.jwt.jwks.model.KeyType;
 import com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg;
 import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -133,7 +132,7 @@ class GeneralKeyFactoryTest {
     }
 
     @Test
-    public void getKeySpec_givenRsaPrivateKeyImpl() throws InvalidKeySpecException, NoSuchAlgorithmException {
+    void getKeySpec_givenRsaPrivateKeyImpl() throws InvalidKeySpecException, NoSuchAlgorithmException {
         KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
         RSAPrivateCrtKey key = (RSAPrivateCrtKey) gen.generateKeyPair().getPrivate();
 
