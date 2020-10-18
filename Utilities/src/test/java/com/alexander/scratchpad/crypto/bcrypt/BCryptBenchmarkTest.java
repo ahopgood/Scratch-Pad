@@ -7,72 +7,60 @@ import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlBenchmarkRe
 import com.alexander.scratchpad.crypto.bcrypt.results.formatters.HtmlDictionaryResultsFormatter;
 import com.alexander.scratchpad.crypto.bcrypt.results.formatters.StandardOutBenchmarkResultsFormatter;
 import com.alexander.scratchpad.crypto.bcrypt.results.formatters.StandardOutDictionaryResultsFormatter;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Alexander on 13/08/2017.
  */
 public class BCryptBenchmarkTest {
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
-    @Test(expected = BCryptHashException.class)
-    public void testRunBenchmark_costFactorEndGreaterThan31_thenThrowException() throws BCryptHashException {
-        BCryptBenchmark bench = new BCryptBenchmark(0, BCryptHash.maximumCost + 1);
-    }
-
-    @Test(expected = BCryptHashException.class)
-    public void testRunBenchmark_costFactorStartGreaterThan31_thenThrowException() throws BCryptHashException {
-        BCryptBenchmark bench = new BCryptBenchmark(BCryptHash.maximumCost + 1, BCryptHash.maximumCost);
-    }
-
-    @Test(expected = BCryptHashException.class)
-    public void testRunBenchmark_costFactorEndLessThan0_thenThrowException() throws BCryptHashException {
-        BCryptBenchmark bench = new BCryptBenchmark(0, -1);
-    }
-
-    @Test(expected = BCryptHashException.class)
-    public void testRunBenchmark_costFactorStartLessThan0_thenThrowException() throws BCryptHashException {
-        BCryptBenchmark bench = new BCryptBenchmark(-1, BCryptHash.maximumCost);
-    }
-
-    @Test(expected = BCryptHashException.class)
-    public void testRunBenchmark_costFactorStartIsGreaterThanCostFactorEnd_thenThrowException() throws BCryptHashException {
-        BCryptBenchmark bench = new BCryptBenchmark(2, 1);
+    @Test
+    void testRunBenchmark_costFactorEndGreaterThan31_thenThrowException()  {
+        assertThrows(BCryptHashException.class, () -> new BCryptBenchmark(0, BCryptHash.maximumCost + 1));
     }
 
     @Test
-    public void testRunBenchmark_costFactorDifferenceOfZero_thenReturnSingleResults() throws BCryptHashException {
+    void testRunBenchmark_costFactorStartGreaterThan31_thenThrowException() {
+        assertThrows(BCryptHashException.class, () ->new BCryptBenchmark(BCryptHash.maximumCost + 1, BCryptHash.maximumCost));
+    }
+
+    @Test
+    void testRunBenchmark_costFactorEndLessThan0_thenThrowException() {
+        assertThrows(BCryptHashException.class, () ->new BCryptBenchmark(0, -1));
+    }
+
+    @Test
+    void testRunBenchmark_costFactorStartLessThan0_thenThrowException() {
+        assertThrows(BCryptHashException.class, () ->new BCryptBenchmark(-1, BCryptHash.maximumCost));
+    }
+
+    @Test
+    void testRunBenchmark_costFactorStartIsGreaterThanCostFactorEnd_thenThrowException() {
+        assertThrows(BCryptHashException.class, () -> new BCryptBenchmark(2, 1));
+    }
+
+    @Test
+    void testRunBenchmark_costFactorDifferenceOfZero_thenReturnSingleResults() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 5);
         assertNotNull(bench.runBenchmark());
         assertEquals(1, bench.runBenchmark().size());
     }
 
     @Test
-    public void testRunBenchmark_costFactorDifferenceOfFour_thenReturnFiveResults() throws BCryptHashException {
+    void testRunBenchmark_costFactorDifferenceOfFour_thenReturnFiveResults() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 9);
         assertNotNull(bench.runBenchmark());
         assertEquals(5, bench.runBenchmark().size());
     }
 
     @Test
-    public void testRunBenchmark_verifyCostFactorAndEffortIncreases() throws BCryptHashException {
+    void testRunBenchmark_verifyCostFactorAndEffortIncreases() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 9);
         assertNotNull(bench.runBenchmark());
         assertEquals(5, bench.runBenchmark().size());
@@ -81,7 +69,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testRunBenchmark_withConsoleFormatter() throws BCryptHashException {
+    void testRunBenchmark_withConsoleFormatter() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 14);
         List<BenchmarkResult> results = bench.runBenchmark();
         assertNotNull(results);
@@ -91,7 +79,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testRunBenchmark_withHtmlFormatter() throws BCryptHashException {
+    void testRunBenchmark_withHtmlFormatter() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 14);
         List<BenchmarkResult> results = bench.runBenchmark();
         assertNotNull(results);
@@ -101,7 +89,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenNullBenchmarkResult() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenNullBenchmarkResult() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -122,7 +110,7 @@ public class BCryptBenchmarkTest {
 //    }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs0() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs0() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -132,7 +120,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIsNegative() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIsNegative() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -142,7 +130,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs100() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs100() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -152,7 +140,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs1000() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs1000() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -162,7 +150,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs10000() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResult_whenDictionaryIs10000() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -171,28 +159,26 @@ public class BCryptBenchmarkTest {
         assertEquals(new Long(100000000), dictionaryResult);
     }
 
-    @Test (expected = BCryptHashException.class)
-    public void testGetDictionaryBenchmark_givenBenchmarkResultListIsNull() throws BCryptHashException {
+    @Test
+    void testGetDictionaryBenchmark_givenBenchmarkResultListIsNull() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
 
-        List<DictionaryResult> dictionaryResult = bench.getDictionaryBenchmark(null, Arrays.asList(100,1000,10000));
-        assertEquals(true, dictionaryResult.isEmpty());
-    }
-
-    @Test (expected = BCryptHashException.class)
-    public void testGetDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListIsNull() throws BCryptHashException {
-        BCryptBenchmark bench = new BCryptBenchmark(5, 6);
-        List<BenchmarkResult> results = new LinkedList<>();
-        results.add(new BenchmarkResult(0, 100, 10));
-
-        List<DictionaryResult> dictionaryResult = bench.getDictionaryBenchmark(results, null);
-        assertEquals(true, dictionaryResult.isEmpty());
+        assertThrows(BCryptHashException.class, () -> bench.getDictionaryBenchmark(null, Arrays.asList(100,1000,10000)));
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResultListIsEmpty() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListIsNull() throws BCryptHashException {
+        BCryptBenchmark bench = new BCryptBenchmark(5, 6);
+        List<BenchmarkResult> results = new LinkedList<>();
+        results.add(new BenchmarkResult(0, 100, 10));
+
+        assertThrows(BCryptHashException.class, () -> bench.getDictionaryBenchmark(results, null));
+    }
+
+    @Test
+    void testGetDictionaryBenchmark_givenBenchmarkResultListIsEmpty() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -202,7 +188,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListIsEmpty() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListIsEmpty() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -213,7 +199,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testGetDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
+    void testGetDictionaryBenchmark_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -228,7 +214,7 @@ public class BCryptBenchmarkTest {
     }
     
     @Test
-    public void testPrintDictionaryBenchmarkToConsole_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
+    void testPrintDictionaryBenchmarkToConsole_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -245,7 +231,7 @@ public class BCryptBenchmarkTest {
         System.out.println(output);
     }
     @Test
-    public void testPrintDictionaryBenchmakToHTML_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
+    void testPrintDictionaryBenchmakToHTML_givenBenchmarkResultList_whenDictionaryListHasThreeValues() throws BCryptHashException {
         BCryptBenchmark bench = new BCryptBenchmark(5, 6);
         List<BenchmarkResult> results = new LinkedList<>();
         results.add(new BenchmarkResult(0, 100, 10));
@@ -263,7 +249,7 @@ public class BCryptBenchmarkTest {
     }
 
     @Test
-    public void testValidate_givenNullArgs(){
+    void testValidate_givenNullArgs(){
 
       String[] args = null;
         assertEquals(BCryptBenchmark.buildHelp(), BCryptBenchmark.validate(args));
