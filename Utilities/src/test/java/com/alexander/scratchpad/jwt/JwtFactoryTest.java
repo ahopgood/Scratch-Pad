@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.temporal.ChronoField;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -20,14 +18,14 @@ public class JwtFactoryTest {
     public void tearDown() throws Exception {
     }
 
-    private String secret = "yyyyyyyyyyy";
+    private String secret = "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy";
     private String service = "myservice";
 
-    private String serviceToken = "eyJhbGciOiJIUzUxMiJ9.eyJzZXJ2aWNlIjoibXlzZXJ2aWNlIn0.crTDZlpMb-fgN5PRzYW2GXwc1awcZ9NfRUQ3vXfHTtyRQihDXe7ITCyawVIrcKguWP4Bmd9vo7s0b2hWeRXoKw";
+    private String serviceToken = "eyJhbGciOiJIUzUxMiJ9.eyJzZXJ2aWNlIjoibXlzZXJ2aWNlIn0.oBCeEwL2kP3Gud-FpJe8Z4rbCCebTtrjfNSuKOxncDXzDdM8QWiQW-AttM4nVvvUFQPbWUd55CFMOpUqlj5scw";
 
     private String subject = "123abc789xyz";
-    private String expiringToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjNhYmM3ODl4eXoiLCJleHAiOjE1MDIxOTM2MDAwMDB9.Nic5neBIRlEioSdPVVWhek1TKE77xZdu15s6hHX10GJbeS9mYMo1EMlkDpe2MV7gDWsSPUMSDf_Sdg9VUZG1nw";
-    private String expiringTokenSecret = "xxxxxxxxxx";
+    private String expiringToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjNhYmM3ODl4eXoiLCJleHAiOjE1MDIxOTM2MDAwMDB9.Zv9i0Q78mJRZpM4csZzhYQg2nIhFlB3rKYqdZnscQQ1ZrkU0eU54ykHrRuKpPBIQaROQ4jwy6ZU7oobLz_MZtw";
+    private String expiringTokenSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     private Object token = null;
 

@@ -13,4 +13,6 @@ public class Hashes {
     public static String sha256 = "$5$";
     public static String sha512 = "$6$";
     public static String jenkins_bcrypt = "jbcrypt:"+blowfish_gen2; //used by jenkins for password encryption
+
+    public static String apache_md5 = "$apr1$"; // $apr1$32-bitsalt$hash //https://httpd.apache.org/docs/2.4/misc/password_encryptions.html
 }

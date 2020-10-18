@@ -3,15 +3,16 @@ package com.alexander.scratchpad.jwt.jwks;
 
 import com.alexander.scratchpad.jwt.jwks.model.KeyType;
 import com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import sun.security.rsa.RSAKeyPairGenerator;
-import sun.security.rsa.RSAPrivateCrtKeyImpl;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.util.stream.Stream;
@@ -107,7 +108,7 @@ class GeneralKeyFactoryTest {
 
     @Test
     void getKey_givenRSAPrivateCrtKeySpec() throws InvalidKeySpecException {
-        RSAPrivateCrtKeyImpl keyImpl = generator.getKey(getRSAPrivateCrtKeySpec());
+        RSAPrivateCrtKey keyImpl = generator.getKey(getRSAPrivateCrtKeySpec());
         assertThat(keyImpl.getModulus()).isEqualTo(modulus);
         assertThat(keyImpl.getPublicExponent()).isEqualTo(publicExponent);
         assertThat(keyImpl.getPrivateExponent()).isEqualTo(privateExponent);
@@ -132,9 +133,9 @@ class GeneralKeyFactoryTest {
     }
 
     @Test
-    public void getKeySpec_givenRsaPrivateKeyImpl() throws InvalidKeySpecException {
-        RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
-        RSAPrivateCrtKeyImpl key = (RSAPrivateCrtKeyImpl)gen.generateKeyPair().getPrivate();
+    public void getKeySpec_givenRsaPrivateKeyImpl() throws InvalidKeySpecException, NoSuchAlgorithmException {
+        KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
+        RSAPrivateCrtKey key = (RSAPrivateCrtKey) gen.generateKeyPair().getPrivate();
 
         RSAPrivateCrtKeySpec keySpec = generator.getKeySpec(key);
 

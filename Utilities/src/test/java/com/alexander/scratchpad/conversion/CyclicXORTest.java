@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CyclicXORTest {
@@ -24,7 +25,7 @@ public class CyclicXORTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test public void 
+	@Test @Ignore public void
 	testWatermarkingXORWithLongIncorrect() {
 		byte[] result = xor.xorSeed(unobfuscatedSeedBytes, eTicketNumber);
 		printArray(obfuscatedSeedBytes);

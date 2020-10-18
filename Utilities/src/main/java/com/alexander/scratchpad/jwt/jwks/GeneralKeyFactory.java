@@ -2,7 +2,6 @@ package com.alexander.scratchpad.jwt.jwks;
 
 import com.alexander.scratchpad.jwt.jwks.model.KeyType;
 import com.alexander.scratchpad.jwt.jwks.model.algorithms.JwtAlg;
-import sun.security.rsa.RSAPrivateCrtKeyImpl;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -11,6 +10,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
 
@@ -62,8 +62,8 @@ public class GeneralKeyFactory {
         }
     }
 
-    public RSAPrivateCrtKeyImpl getKey(RSAPrivateCrtKeySpec spec) throws InvalidKeySpecException {
-        return (RSAPrivateCrtKeyImpl)rsaKeyFactory.generatePrivate(spec);
+    public RSAPrivateCrtKey getKey(RSAPrivateCrtKeySpec spec) throws InvalidKeySpecException {
+        return (RSAPrivateCrtKey)rsaKeyFactory.generatePrivate(spec);
     }
 
     public RSAPrivateCrtKeySpec getKeySpec(PrivateKey key) throws InvalidKeySpecException {
